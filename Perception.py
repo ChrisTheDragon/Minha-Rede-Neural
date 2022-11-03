@@ -1,16 +1,43 @@
-inputs = [[0, 0, 1], [1, 0, 1], [1, 1, 1], [1, 1, 0]]
-target = [1, 1, 0, 0]
+#---------------------------------------------------#
+'''              Rede Neural Perception
+Uma rede neural com um neuron, ou seja, processa um 
+dado de cada vez
+Esta rede neural responde com SIM[1] ou NÃO[0] com 
+base em Entrada[inputs] de 3 pesos.
 
-peso = [0, 0, 0]
+Exemplo: Ir em uma viagem
+
+Uma tupla é gerada conforme as perguntas:
+[Tem amigos para ir junto?,
+ A passagem está cara?, 
+ O meio de transporte é seguro?
+]
+
+input: [1, 0, 0] 
+-> Esta pessoa Vai[1] com amigos,
+-> A passagem Não[0] está cara,
+-> O meio de transporte Não[0] é seguro
+
+output: [0] 
+-> Esta pessoa Não[0] deve viajar
+
+'''
+#---------------------------------------------------#
+
+inputs = [[0, 0, 1], [1, 0, 1], [1, 1, 1], [1, 1, 0]] #Base de dados
+target = [1, 1, 0, 0]                                 #Resultados alvos da base de dados
+
+#Inicialização das variaveis---#
+peso = [0, 0, 0] 
 delta_peso = [0, 0, 0]
 vies = 0
 delta_vies = 0
 lr = 0.1
 voltas = 2
-
-input_fi = []
 y_input = [0, 0, 0, 0]
+#------------------------------#
 
+#Somatoria de [input * peso]
 def neuron(inputx):
     z = 0
     for i in range(len(inputx)):
@@ -19,6 +46,7 @@ def neuron(inputx):
     return z + vies
 
 
+#Retorna a resposta Sim[1] ou Não[0]
 def ativacao(fi):
     if(fi > 0):
         return 1
@@ -26,6 +54,7 @@ def ativacao(fi):
         return 0
 
 
+#Treina a rede neural com loops
 def treinamento(inputx, targetx, y_inputx):
     global delta_vies, vies
     for i in range(0, len(inputx)):
@@ -35,26 +64,23 @@ def treinamento(inputx, targetx, y_inputx):
     vies += delta_vies
 
 
+#Etapa de trinamento, se a rede neural errar, ela treina ate acertar.
 for i in range(voltas):
     for j in range(4):
         y_input[j] = ativacao(neuron(inputs[j]))
         
         if (y_input[j] != target[j]):
             treinamento(inputs[j], target[j], y_input[j])
-        
-        print(peso, vies)
-        print('\n')
     j = 0   
 
+
+#Novos dados para verificar se a rede neural esta pronta
+'''[1, 0, 0] -> [Tem amigos, A passagem não esta cara, o Transporte não é seguro] logo [0] Não vai
+   [0, 0, 1] -> [Não tem amigos, A passagem não esta cara, o Transporte é Seguro] logo [1] Vai
+   [1, 1, 1] -> [Tem amigos, A passagem está cara, o Transporte é seguro]         logo [0] Não vai'''
 print("\n")
-input_n = [0, 0, 0]
-y = neuron(input_n)
-print(ativacao(y))
+input_n = [[1, 0, 0], [0, 0, 1], [1, 1, 1]]
 
-input_n2 = [0, 0, 1]
-y1 = neuron(input_n2)
-print(ativacao(y1))
-
-input_n3 = [1, 1, 1]
-y2 = neuron(input_n3)
-print(ativacao(y2))
+print(ativacao(neuron(input_n[0])))
+print(ativacao(neuron(input_n[1])))
+print(ativacao(neuron(input_n[2])))

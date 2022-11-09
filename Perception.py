@@ -33,8 +33,9 @@ delta_peso = [0, 0, 0]
 vies = 0
 delta_vies = 0
 lr = 0.1
-voltas = 2
+voltas = 3
 y_input = [0, 0, 0, 0]
+participantes = len(inputs)
 #------------------------------#
 
 #Somatoria de [input * peso]
@@ -66,7 +67,8 @@ def treinamento(inputx, targetx, y_inputx):
 
 #Etapa de trinamento, se a rede neural errar, ela treina ate acertar.
 for i in range(voltas):
-    for j in range(4):
+    for j in range(participantes):
+        print(peso, y_input)
         y_input[j] = ativacao(neuron(inputs[j]))
         
         if (y_input[j] != target[j]):

@@ -68,7 +68,7 @@ def treinamento(inputx, targetx, y_inputx):
 #Etapa de trinamento, se a rede neural errar, ela treina ate acertar.
 for i in range(voltas):
     for j in range(participantes):
-        #print(peso, y_input)
+        print(peso, y_input)
         y_input[j] = ativacao(neuron(inputs[j]))
         
         if (y_input[j] != target[j]):
